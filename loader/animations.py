@@ -19,3 +19,4 @@ grass_down = resource.image("grass_down.png")
 grass_up = resource.image("grass_up.png")
 
 grossini = resource.image("grossini.png")
+palletBg = resource.image("1x1.png")

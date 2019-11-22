@@ -2,7 +2,7 @@ import cocos
 from cocos.actions import *
 from cocos.director import director
 from cocos.sprite import Sprite
-from loader.animations import grossini
+from loader.animations import grossini, palletBg
 from pyglet.window import mouse
 
 class HelloWorld(cocos.layer.Layer):
@@ -11,11 +11,26 @@ class HelloWorld(cocos.layer.Layer):
     def __init__(self):
         super().__init__()
         self.sprite = Sprite(grossini, anchor=(0, 0))
+        self.palletbg = Sprite(palletBg, anchor=(0, 0))
+
         self.sprite.position = 320, 100
+        self.palletbg.position = 320, 100
+        
         self.sprite.scale = 3
+
+
+        
+        self.add(self.palletbg, z=0)
         self.add(self.sprite, z=1)
         self.spriteClicked = False
         
+        
+        self.schedule(self._update)
+
+
+    def _update(self, dt):
+        pass
+
     def mouse_on_sprite(self, x, y):
         if (x < self.sprite.x + self.sprite.width) and (x > self.sprite.x) and (y < self.sprite.y + self.sprite.height) and (y > self.sprite.y):
             return True
