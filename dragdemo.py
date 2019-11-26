@@ -5,6 +5,8 @@ from cocos.sprite import Sprite
 from loader.animations import grossini, palletBg
 from pyglet.window import mouse
 
+from editor.components import Pallet
+
 import pdb
 
 class HelloWorld(cocos.layer.Layer):
@@ -13,21 +15,33 @@ class HelloWorld(cocos.layer.Layer):
     def __init__(self):
         super().__init__()
         self.sprite = Sprite(grossini, anchor=(0, 0))
-        # self.palletbg = Sprite(palletBg, anchor=(0, 0))
+        self.pallet = Pallet(x=800, y= 800-100)
+        self.pallet._addItems(self, 5)
+        
+                
+        self.window_width = 1200
+        self.window_height = 800
 
-        self.lastx = 0
-        self.lasty = 50
-        self.sprite.position = 320, 100
-        # self.palletbg.position = 320, 100
+        #table position
+        self.tableX = 800
+        self.tableY = self.window_height - 100
+
+        #draw sprites position
+        self.lastx = self.tableX + 10
+        self.lasty = self.tableY - self.sprite.height
+
+        
+
+        # self.sprite.position = 320, 100
+        
         
         self.sprite.scale = 2
         self.selectedSprite = None
         
-        
+        # self._addPalletSprites(10)
 
-        self._addPalletSprites(5)
         # self.add(self.palletbg, z=0)
-        self.add(self.sprite, z=1)
+        # self.add(self.sprite, z=1)
         self.spriteClicked = False
         
         
@@ -37,17 +51,17 @@ class HelloWorld(cocos.layer.Layer):
         for i in range(numberofsprites):
             spr = Sprite(image = self.sprite.image, anchor=(0, 0))
             spr.position = self.lastx, self.lasty
-            spr.scale = 3
+            spr.scale = 1.5
             self.add(spr)
-            self.lastx += self.sprite.width + 10
-            
+            self.lasty -= spr.height + 10
 
     def _update(self, dt):
         pass
 
     def mouse_on_sprite(self, x, y):
         for sprite in self.get_children():
-            if (x < sprite.x + sprite.width) and (x > sprite.x) and (y < sprite.y + sprite.height) and (y > sprite.y):
+            # if (x < sprite.x + sprite.width) and (x > sprite.x) and (y < sprite.y + sprite.height) and (y > sprite.y):
+            if sprite.contains(x, y):
                 self.selectedSprite = sprite
                 # pdb.set_trace()
                 return True
@@ -76,16 +90,19 @@ class HelloWorld(cocos.layer.Layer):
 
         director.window.set_mouse_cursor(cursor)
 
+    # def on_enter(self):
+    #     pass
+
 if __name__ == "__main__":
 
-    director.init(width=1020, height=720)
+    director.init(width=1200, height=800)
     director.window.pop_handlers()
 
     hello_layer = HelloWorld()
+    main_scene = cocos.scene.Scene(hello_layer)
+    cocos.director.director.run(main_scene)
 
     
-    main_scene = cocos.scene.Scene(hello_layer)
 
-    cocos.director.director.run(main_scene)
 
 
