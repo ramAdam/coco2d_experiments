@@ -12,3 +12,11 @@ background = resource.image('background.png')
 stage2 = resource.image('Stage1-2.png')
 
 kitten = resource.image("kitten.png")
+scrlbg = resource.image("bg2Scrollable.jpg")
+cross = resource.image("cross.png")
+
+grass_down = resource.image("grass_down.png")
+grass_up = resource.image("grass_up.png")
+
+grossini = resource.image("grossini.png")
+palletBg = resource.image("1x1.png")
